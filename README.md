@@ -27,17 +27,14 @@ Or install it yourself as:
 
 ## Usage
 
-Since this gem overrides the normal `parallel:test` task, there really isn't much to it. However,
-one should set the FINE_GRAIN_TEST_RUNTIME_LOGGER to the location of the file in which to record
-test times.
+The usage is much like `parallel:test` task.
 
 Example,
 ```
-%> FINE_GRAIN_TEST_RUNTIME_LOGGER=test/profiles/seleium.log rake parallel:test[^test/selenium]
-%> FINE_GRAIN_TEST_RUNTIME_LOGGER=test/profiles/unit.log rake parallel:test[^test/unit]
+%> rake parallel:fine_grain_test[^test/selenium]
 ```
 
-Setting FINE_GRAIN_TEST_RUNTIME_LOGGER is optional, but it highly recommended.
+The FINE_GRAIN_TEST_RUNTIME_LOGGER can be optionally set to the location of the file where the test times should be read from / written to. Although optional, it is highly recommended to set FINE_GRAIN_TEST_RUNTIME_LOGGER as it helps the tests complete faster.
 
 ## Development
 
