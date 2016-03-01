@@ -31,8 +31,11 @@ module ParallelTests
       end
 
       def cmd
-        bin_path = File.expand_path("../../../../bin/parallel_fine_grain_test", __FILE__)
-        "#{bin_path} test --type fine_grain_test -n 2 --first-is-1 --pattern 'test/fixtures/test'"
+        command = [ 'rake' ]
+        command << %{-E "require 'parallel_tests/fine_grain_test/tasks'"}
+        command << %{parallel:fine_grain_test[2,^test/fixtures/test]}
+        command << %{PARALLEL_TEST_FIRST_IS_1=true}
+        command.join(' ')
       end
     end
   end
