@@ -11,6 +11,13 @@ module ParallelTests
         end
       end
 
+      def test_activesupport_4_2
+        Bundler.with_clean_env do
+          result = `appraisal activesupport_4_2 #{cmd} 2>&1`
+          assert_result(result)
+        end
+      end
+
       private
 
       def assert_result(result)
