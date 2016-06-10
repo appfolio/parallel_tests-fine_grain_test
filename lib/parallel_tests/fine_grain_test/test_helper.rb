@@ -6,7 +6,7 @@ puts msg
 Rails.logger.info msg if defined?(Rails)
 
 if defined?(Minitest::Runnable) # Minitest 5
-  raise NotImplementedError.new("FineGrainTest does not currently support Minitest 5")
+  require 'parallel_tests/fine_grain_test/minitest'
 elsif defined?(MiniTest::Unit) # Minitest 4
   raise NotImplementedError.new("FineGrainTest does not currently support Minitest 4")
 elsif defined?(Test::Unit)
