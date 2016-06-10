@@ -16,14 +16,14 @@ module ParallelTests
           @test_cases << TestCase.new(klass, method_name)
         end
 
-        def run(reporter, options)
+        def run(reporter, _)
           @file_queue.enq_all(@test_cases) do |tcs|
             runtimes = @runtime_logger.runtimes
             @runtime_logger.reset
             tcs.sort_by { |test_case| runtimes[test_case] || 0 }.reverse
           end
 
-          while test_case = @file_queue.deq
+          until (test_case = @file_queue.deq).nil?
             @runtime_logger.log_runtime(test_case) do
               reporter.record ::Minitest.run_one_method(test_case.suite, test_case.name)
             end
@@ -33,4 +33,3 @@ module ParallelTests
     end
   end
 end
-

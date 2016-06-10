@@ -5,7 +5,7 @@ module ParallelTests
   module FineGrainTest
     class TestUnitIntegationTest < Minitest::Test
       def setup
-        @runtime_logger = "/tmp/runtime_logger_#{$$}"
+        @runtime_logger = "/tmp/runtime_logger_#{$PID}"
         FileUtils.rm_rf(@runtime_logger)
       end
 
@@ -22,7 +22,12 @@ module ParallelTests
 
       def test_activesupport_3_2__with_runtime_logger
         Bundler.with_clean_env do
-          result = `appraisal activesupport_3_2 #{cmd} FINE_GRAIN_TEST_RUNTIME_LOGGER=#{@runtime_logger} 2>&1`
+          command = ['appraisal activesupport_3_2']
+          command << cmd
+          command << "FINE_GRAIN_TEST_RUNTIME_LOGGER=#{@runtime_logger}"
+          command << '2>&1'
+
+          result = `#{command.join(' ')}`
           assert_test_unit_result(result)
           assert_runtime_logger(@runtime_logger)
         end
@@ -31,7 +36,7 @@ module ParallelTests
       private
 
       def assert_runtime_logger(file)
-        File.exists?(file)
+        File.exist?(file)
       end
 
       def assert_test_unit_result(result)

@@ -4,7 +4,7 @@ module ParallelTests
   module FineGrainTest
     module Minitest
       module Runnable
-        def run_one_method(klass, method_name, reporter)
+        def run_one_method(klass, method_name, _)
           ::Minitest.fine_grain_suite.add(klass, method_name)
         end
       end
