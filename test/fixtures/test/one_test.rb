@@ -2,7 +2,7 @@ require_relative '../test_helper'
 
 class OneTest < ActiveSupport::TestCase
   def test_one
-    sleep 0.25
     puts "\none\n"
+    sleep 0.25
   end
 end

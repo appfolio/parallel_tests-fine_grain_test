@@ -3,24 +3,38 @@ require 'bundler'
 
 module ParallelTests
   module FineGrainTest
-    class IntegationTest < Minitest::Test
+    class TestUnitIntegationTest < Minitest::Test
+      def setup
+        @runtime_logger = "/tmp/runtime_logger_#{$$}"
+        FileUtils.rm_rf(@runtime_logger)
+      end
+
+      def teardown
+        FileUtils.rm_rf(@runtime_logger)
+      end
+
       def test_activesupport_3_2
         Bundler.with_clean_env do
           result = `appraisal activesupport_3_2 #{cmd} 2>&1`
-          assert_result(result)
+          assert_test_unit_result(result)
         end
       end
 
-      def test_activesupport_4_2
+      def test_activesupport_3_2__with_runtime_logger
         Bundler.with_clean_env do
-          result = `appraisal activesupport_4_2 #{cmd} 2>&1`
-          assert_result(result)
+          result = `appraisal activesupport_3_2 #{cmd} FINE_GRAIN_TEST_RUNTIME_LOGGER=#{@runtime_logger} 2>&1`
+          assert_test_unit_result(result)
+          assert_runtime_logger(@runtime_logger)
         end
       end
 
       private
 
-      def assert_result(result)
+      def assert_runtime_logger(file)
+        File.exists?(file)
+      end
+
+      def assert_test_unit_result(result)
         # two process started?
         assert_includes result, 'test_env_number:1'
         assert_includes result, 'test_env_number:2'
