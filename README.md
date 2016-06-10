@@ -6,7 +6,10 @@ beginning. This causes uneven runtimes as some test processes end up with faster
 This gem extends the `parallel_tests` gem to enable parallel test processes to pull tests from a global queue until there are no more tests. This results in all parallel test processes being
 utilized much more optimally which leads to faster tests.
 
-Currently, only test-unit / activesupport 3.2 is supported.
+Tested with,
+test-unit / activesupport 3.x
+minitest / activesupport 4.x
+minitest / activesupport 5.x
 
 ## Installation
 
@@ -40,7 +43,7 @@ The FINE_GRAIN_TEST_RUNTIME_LOGGER can be optionally set to the location of the 
 
 After checking out the repo, run `bundle` to install dependencies. Then, run `rake test` to run the tests.
 
-Note, this gem uses Minitest framework for its own tests but uses the Appraisal gem to test against potentially different version of test-unit and minitest. See integration_test.rb.
+Note, this gem uses Minitest framework for its own tests but uses the Appraisal gem to test against potentially different version of test-unit and minitest. See the integration tests.
 
 ## Contributing
 

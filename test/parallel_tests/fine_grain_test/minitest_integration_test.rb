@@ -13,16 +13,36 @@ module ParallelTests
         FileUtils.rm_rf(@runtime_logger)
       end
 
-      def test_activesupport_4_2
+      def test_activesupport_4
         Bundler.with_clean_env do
-          result = `appraisal activesupport_4_2 #{cmd} 2>&1`
+          result = `appraisal activesupport_4 #{cmd} 2>&1`
           assert_minitest_result(result)
         end
       end
 
-      def test_activesupport_4_2__with_runtime_logger
+      def test_activesupport_5
         Bundler.with_clean_env do
-          command = ['appraisal activesupport_4_2']
+          result = `appraisal activesupport_5 #{cmd} 2>&1`
+          assert_minitest_result(result)
+        end
+      end
+
+      def test_activesupport_4__with_runtime_logger
+        Bundler.with_clean_env do
+          command = ['appraisal activesupport_4']
+          command << cmd
+          command << "FINE_GRAIN_TEST_RUNTIME_LOGGER=#{@runtime_logger}"
+          command << '2>&1'
+
+          result = `#{command.join(' ')}`
+          assert_minitest_result(result)
+          assert_runtime_logger(@runtime_logger)
+        end
+      end
+
+      def test_activesupport_5__with_runtime_logger
+        Bundler.with_clean_env do
+          command = ['appraisal activesupport_5']
           command << cmd
           command << "FINE_GRAIN_TEST_RUNTIME_LOGGER=#{@runtime_logger}"
           command << '2>&1'
