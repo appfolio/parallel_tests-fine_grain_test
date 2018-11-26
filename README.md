@@ -47,5 +47,5 @@ Note, this gem uses Minitest framework for its own tests but uses the Appraisal 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/parallel_tests-fine_grain_test.
+Bug reports and pull requests are welcome on GitHub at https://github.com/appfolio/parallel_tests-fine_grain_test.
 
