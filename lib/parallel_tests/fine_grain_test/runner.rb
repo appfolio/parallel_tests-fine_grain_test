@@ -15,7 +15,7 @@ module ParallelTests
         end
 
         def tests_in_groups(tests, num_groups, options={})
-          ParallelTests::FineGrainTest::FileQueue.new.reset
+          ParallelTests::FineGrainTest::PosixMessageQueue.new.reset
 
           results = super
           @@tests = results.flatten

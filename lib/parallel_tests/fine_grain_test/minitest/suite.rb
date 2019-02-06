@@ -1,12 +1,12 @@
 require 'parallel_tests/fine_grain_test/test_case'
-require 'parallel_tests/fine_grain_test/file_queue'
+require 'parallel_tests/fine_grain_test/posix_message_queue'
 require 'parallel_tests/fine_grain_test/runtime_logger'
 
 module ParallelTests
   module FineGrainTest
     module Minitest
       class Suite
-        def initialize(file_queue = FileQueue.new, runtime_logger = RuntimeLogger.new)
+        def initialize(file_queue = PosixMessageQueue.new, runtime_logger = RuntimeLogger.new)
           @test_cases = []
           @file_queue = file_queue
           @runtime_logger = runtime_logger
