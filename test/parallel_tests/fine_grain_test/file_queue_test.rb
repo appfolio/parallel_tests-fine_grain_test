@@ -99,14 +99,20 @@ module ParallelTests
         assert_equal nil, @file_queue.deq
       end
 
-      def test_deq__should_remove_and_return_first_case
-        File.write(@file_name, "#{self.class.name} one\n#{self.class.name} two")
+      def test_deq__should_remove_and_return_last_case
+        File.write(@file_name, "#{self.class.name} one\n#{self.class.name} two\n")
+
+        test_case = @file_queue.deq
+
+        assert_equal self.class, test_case.suite
+        assert_equal 'two', test_case.name
+        assert_equal 1, @file_queue.size
 
         test_case = @file_queue.deq
 
         assert_equal self.class, test_case.suite
         assert_equal 'one', test_case.name
-        assert_equal 1, @file_queue.size
+        assert_equal 0, @file_queue.size
       end
     end
   end
