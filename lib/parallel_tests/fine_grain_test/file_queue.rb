@@ -29,11 +29,14 @@ module ParallelTests
 
       def deq
         lock do |file|
-          lines = file.read.split(/\n/)
+          contents = file.read
+          lines = contents.split(/\n/)
           return nil if lines.empty? || lines[0].chomp == MARKER
-          rewrite(file, lines[1..-1])
 
-          return TestCase.decode(lines[0].chomp)
+          new_size = contents.bytesize - lines.last.bytesize - 1
+          file.truncate new_size
+
+          return TestCase.decode(lines.last.chomp)
         end
       end
 
