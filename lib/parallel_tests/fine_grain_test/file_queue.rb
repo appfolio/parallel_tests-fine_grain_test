@@ -22,7 +22,7 @@ module ParallelTests
 
           test_cases = yield(test_cases) if block_given?
 
-          lines = test_cases.map { |test_case| TestCase.encode(test_case) }
+          lines = test_cases.map { |test_case| TestCase.encode(test_case) }.reverse
           rewrite(file, lines)
         end
       end

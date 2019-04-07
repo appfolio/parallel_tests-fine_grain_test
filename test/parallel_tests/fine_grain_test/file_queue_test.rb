@@ -64,6 +64,25 @@ module ParallelTests
         assert_equal 3, @file_queue.size
       end
 
+      def test_enq_all__should_write_tests_in_reverse_order
+        test_cases = [
+          TestCase.new(self.class, "one"),
+          TestCase.new(self.class, "two"),
+          TestCase.new(self.class, "three"),
+        ]
+
+        @file_queue.reset
+        @file_queue.enq_all(test_cases)
+
+        lines = File.readlines(@file_name)
+        expected_lines = [
+          "#{self.class.name} three\n",
+          "#{self.class.name} two\n",
+          "#{self.class.name} one\n",
+        ]
+        assert_equal expected_lines, lines
+      end
+
       def test_enq_all__should_not_enque_when_file_empty
         test_cases = [
           TestCase.new(self, "one"),
