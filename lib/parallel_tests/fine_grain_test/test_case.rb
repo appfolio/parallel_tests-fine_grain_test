@@ -9,7 +9,12 @@ module ParallelTests
       def self.decode(string)
         suite, name = string.split(/ /, 2)
         name = name.gsub("\\n", "\n").gsub("\\\\", "\\")
-        new(Object.module_eval("::#{suite}", __FILE__, __LINE__), name)
+        suite_object = begin
+                         Object.module_eval("::#{suite}", __FILE__, __LINE__)
+                       rescue NameError
+                         nil
+                       end
+        new(suite_object, name) if suite_object
       end
 
       def ==(other)
