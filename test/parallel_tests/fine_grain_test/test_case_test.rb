@@ -48,6 +48,12 @@ module ParallelTests
         assert_equal self.class, test_case.suite
         assert_equal "hello\\there", test_case.name
       end
+
+      def test_decode__should_return_nil_when_suite_is_not_defined
+        str = "ParallelTests::FineGrainTest::DoesNotExist hello\\\\there"
+
+        assert_nil TestCase.decode(str)
+      end
     end
   end
 end
