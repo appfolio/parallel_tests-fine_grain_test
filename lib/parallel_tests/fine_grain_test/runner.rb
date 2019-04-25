@@ -19,7 +19,7 @@ module ParallelTests
 
           results = super
           @@tests = results.flatten
-          results
+          (1..num_groups).map { |group_number| ["fake_test_#{group_number}.rb"] }
         end
       end
     end
